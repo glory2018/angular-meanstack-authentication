@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 
 export class AuthService {
-  endpoint = 'http://localhost:4000/api';
+  endpoint = 'http://localhost:9000/api3/user';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
@@ -22,7 +22,7 @@ export class AuthService {
 
   // Sign-up
   signUp(user: User): Observable<any> {
-    const api = `${this.endpoint}/register-user`;
+    const api = `${this.endpoint}/createUser`;
     return this.http.post(api, user)
       .pipe(
         catchError(this.handleError)
@@ -31,13 +31,13 @@ export class AuthService {
 
   // Sign-in
   signIn(user: User) {
-    return this.http.post<any>(`${this.endpoint}/signin`, user)
+    return this.http.post<any>(`${this.endpoint}/login`, user)
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
-        this.getUserProfile(res._id).subscribe((res) => {
-          this.currentUser = res;
-          this.router.navigate(['user-profile/' + res.msg._id]);
-        });
+        this.router.navigate(['users']);
+        // this.getUserProfile(res._id).subscribe((res) => {
+        //   this.currentUser = res;
+        // });
       });
   }
 
@@ -67,7 +67,6 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
-
   // Error
   handleError(error: HttpErrorResponse) {
     let msg = '';
@@ -79,5 +78,25 @@ export class AuthService {
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(msg);
+  }
+
+  getUser(id): Observable<any> {
+    return this.http.get(`${this.endpoint}/getUserById/${id}`);
+  }
+
+  createUser(user: object): Observable<object> {
+    return this.http.post(`${this.endpoint}`, user);
+  }
+
+  updateUser(id: number, value: any): Observable<object> {
+    return this.http.put(`${this.endpoint}/${id}`, value);
+  }
+
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.endpoint}/deleteUser/${id}`, {responseType: 'text'});
+  }
+
+  getUsersList(): Observable<any> {
+    return this.http.get(`${this.endpoint}/getAllUsers`);
   }
 }

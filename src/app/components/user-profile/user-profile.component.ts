@@ -10,15 +10,15 @@ import {User} from '../../shared/user';
 })
 
 export class UserProfileComponent implements OnInit {
-  currentUser: User;
+  user: User;
 
   constructor(
     public authService: AuthService,
     private actRoute: ActivatedRoute
   ) {
     const id = this.actRoute.snapshot.paramMap.get('id');
-    this.authService.getUserProfile(id).subscribe(res => {
-      this.currentUser = res.msg;
+    this.authService.getUser(id).subscribe(res => {
+      this.user = res;
     });
   }
 

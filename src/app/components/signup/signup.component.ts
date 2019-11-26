@@ -17,9 +17,9 @@ export class SignupComponent implements OnInit {
     public router: Router
   ) {
     this.signupForm = this.fb.group({
-      name: [''],
-      email: [''],
-      mobile: [''],
+      username: [''],
+      firstName: [''],
+      lastName: [''],
       password: ['']
     });
   }
@@ -32,8 +32,8 @@ export class SignupComponent implements OnInit {
       if (res.result) {
         console.log(res);
         this.signupForm.reset();
-        this.router.navigate(['log-in']);
       }
+      this.router.navigate(['log-in']);
     });
   }
 }
