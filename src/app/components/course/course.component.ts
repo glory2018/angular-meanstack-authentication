@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from './../../shared/auth.service';
-import {User} from '../../shared/user';
 import {Observable} from 'rxjs';
 import {CourseService} from '../../shared/course.service';
 import {FormGroup} from '@angular/forms';

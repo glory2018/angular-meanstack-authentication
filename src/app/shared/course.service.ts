@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 })
 
 export class CourseService {
-  endpoint = 'http://localhost:9000/api1/course';
+  endpoint = 'http://localhost:9000/api1/skill';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
@@ -19,6 +19,6 @@ export class CourseService {
   }
 
   getCoursesList(course: object): Observable<any> {
-    return this.http.post(`${this.endpoint}/getCoursesList`, course);
+    return this.http.post(`${this.endpoint}/find`, course);
   }
 }
