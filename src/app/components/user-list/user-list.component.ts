@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from './../../shared/auth.service';
 import {User} from '../../shared/user';
 import {Observable} from 'rxjs';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
@@ -11,8 +12,12 @@ import {Observable} from 'rxjs';
 })
 export class UserListComponent implements OnInit {
   users: Observable<User[]>;
+  formModel: FormGroup;
 
-  constructor(public authService: AuthService, private actRoute: ActivatedRoute, private router: Router) {
+  constructor(public fb: FormBuilder, public authService: AuthService, private actRoute: ActivatedRoute, private router: Router) {
+    this.formModel = this.fb.group({
+      username: [''],
+    });
   }
 
   ngOnInit() {

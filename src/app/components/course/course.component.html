@@ -1,14 +1,14 @@
 <nav class="my-2 my-md-0 mr-md-3">
   <a routerLink="/users">users</a>
 </nav>
+<form [formGroup]="formModel" (ngSubmit)="reloadData()">
+  <div align="left">
+    <label>name:</label>
+    <input type="name" formControlName="name" placeholder="Enter name">
+    <button type="submit" class="btn btn-info">Search</button>
+  </div>
+</form>
 <div class="panel panel-primary">
-  <form [formGroup]="form" (ngSubmit)="reloadData()">
-    <div align="left">
-      <label>Name:</label>
-      <input type="name" formControlName="name" placeholder="Enter Name">
-      <button type="submit" class="btn btn-info">Search</button>
-    </div>
-  </form>
   <div class="panel-heading">
     <h2>Course List</h2>
   </div>
@@ -22,10 +22,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let course of courses | async">
-        <td>{{course.name}}</td>
-        <td>{{course.toc}}</td>
-        <td>{{course.prerequisites}}</td>
+      <tr *ngFor="let cc of courses">
+        <td>{{cc["name"]}}</td>
+        <td>{{cc["toc"]}}</td>
+        <td>{{cc["prerequisites"]}}</td>
       </tr>
       </tbody>
     </table>

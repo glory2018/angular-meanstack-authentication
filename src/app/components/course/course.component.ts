@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {CourseService} from '../../shared/course.service';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Course} from '../../shared/course';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-user-list',
@@ -12,8 +12,12 @@ import {Course} from '../../shared/course';
 })
 export class CourseComponent implements OnInit {
   courses: Observable<Course[]>;
-  form: FormGroup;
-  constructor(public courseService: CourseService, private actRoute: ActivatedRoute, private router: Router) {
+  formModel: FormGroup;
+
+  constructor(public fb: FormBuilder, public courseService: CourseService) {
+    this.formModel = this.fb.group({
+      name: [''],
+    });
   }
 
   ngOnInit() {
@@ -21,6 +25,10 @@ export class CourseComponent implements OnInit {
   }
 
   reloadData() {
-    this.courses = this.courseService.getCoursesList(this.form.value);
+    this.courseService.getCoursesList(this.formModel.value).subscribe((res) => {
+      if (res.success) {
+        this.courses = res.data;
+      }
+    });
   }
 }
